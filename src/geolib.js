@@ -230,10 +230,7 @@
         * @param    integer   Precision (in decimal cases)
         * @return   integer   Distance (in meters)
         */
-        getDistance: function(start, end, accuracy, precision) {
-
-            accuracy = Math.floor(accuracy) || 1;
-            precision = Math.floor(precision) || 0;
+        getDistance: function(start, end) {
 
             var s = this.coords(start);
             var e = this.coords(end);
@@ -346,16 +343,14 @@
             );
 
             var distance = b * A * (sigma - deltaSigma);
-
-            distance = distance.toFixed(precision); // round to 1mm precision
-
+            
             //if (start.hasOwnProperty(elevation) && end.hasOwnProperty(elevation)) {
             if (typeof this.elevation(start) !== 'undefined' && typeof this.elevation(end) !== 'undefined') {
                 var climb = Math.abs(this.elevation(start) - this.elevation(end));
                 distance = Math.sqrt(distance * distance + climb * climb);
             }
 
-            return this.distance = Math.round(distance * Math.pow(10, precision) / accuracy) * accuracy / Math.pow(10, precision);
+            return this.distance;
 
             /*
             // note: to return initial/final bearings in addition to distance, use something like:
